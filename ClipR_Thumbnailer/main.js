@@ -2,16 +2,19 @@ var AWS = require("aws-sdk");
 var fs = require("fs");
 var c = require("child_process");
 const exec = require("child_process").exec;
-var zipFolder = require('zip-folder');
-var s3dir = require('s3-upload-dir');
-
 var s3 = new AWS.S3();
-
+var smallS3 = require('s3');
 
 
 exports.myHandler = function(event, context, callback) {
 
   var contentName = event.content;
+
+  var options = {
+    s3Client: s3,
+    // more options available. See API docs below.
+  };
+  var client = s3.createClient(options);
 
   exec("ls;", (error, stdout, stderr) => {
     console.log(`${stdout}`);
@@ -30,13 +33,6 @@ exports.myHandler = function(event, context, callback) {
       .pipe(file);
 
     
-      var params = {
-        localDir: "/tmp/out",
-        s3Params: {
-            Bucket: "clipr-thumbnails"
-        }
-    };
-
     var outputImageName = contentName + "%d.png";
 
     exec(
@@ -50,33 +46,28 @@ exports.myHandler = function(event, context, callback) {
         console.log(`${stdout}`);
         console.log(`${stderr}`);
 
-
         var params = {
             localDir: "/tmp/out",
             s3Params: {
-                Bucket: "clipr-thumbnails"
-            }
-        };
+              Bucket: "clipr-thumbnails"
+              //Prefix: "all",
+              // other options supported by putObject, except Body and ContentLength.
+              // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+            },
+          };
 
-        var uploader = s3dir.uploadDir(params);
-        
-        uploader.on('error', function (err) {
-            console.error("unable to upload:", err.stack);
-        });
-        
-        uploader.on('progress', function () {
-            console.log("progress", uploader.progressMd5Amount,
-                    uploader.progressAmount, uploader.progressTotal);
-
-        });
-        
-        uploader.on('end', function () {
+          var uploader = client.uploadDir(params);
+          uploader.on('error', function(err) {
+            console.error("unable to sync:", err.stack);
+          });
+          uploader.on('progress', function() {
+            console.log("progress", uploader.progressAmount, uploader.progressTotal);
+          });
+          uploader.on('end', function() {
             console.log("done uploading");
-            callback(null,"DONE UPLOADING!!")
-            exit;
-        });
+            callback(null, "DONE UPLOADING!")
+          });
 
-    
         if (error !== null) {
           console.log(`exec error: ${error}`);
           callback("ERROR!");

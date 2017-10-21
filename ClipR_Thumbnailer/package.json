@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/bearcott/clipr#readme",
   "dependencies": {
+    "s3": "^4.4.0",
     "s3-upload-dir": "^0.1.0"
   }
 }
