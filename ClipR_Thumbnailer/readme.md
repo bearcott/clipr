@@ -1,0 +1,1 @@
+Handles Thumbnails from images
