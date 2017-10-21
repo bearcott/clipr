@@ -49,8 +49,8 @@ exports.myHandler = function(event, context, callback) {
         var params = {
             localDir: "/tmp/out",
             s3Params: {
-              Bucket: "clipr-thumbnails"
-              //Prefix: "all",
+              Bucket: "clipr-thumbnails",
+              Prefix: "all",
               // other options supported by putObject, except Body and ContentLength.
               // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
             },
