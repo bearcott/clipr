@@ -65,6 +65,7 @@ exports.myHandler = function(event, context, callback) {
           });
           uploader.on('end', function() {
             console.log("done uploading");
+            context.succeed("DONE UPLOADING!!!");
             callback(null, "DONE UPLOADING!")
           });
 
