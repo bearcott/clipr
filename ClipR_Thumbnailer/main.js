@@ -15,7 +15,7 @@ exports.myHandler = function(event, context, callback) {
     }
 
 
-    exec("tar ffmpeg.tar.xz; cd ffmpeg; ls; ./ffmpeg -version", (error, stdout, stderr) => {
+    exec("tar xf ffmpeg.tar.xz; cd ffmpeg; ls; ./ffmpeg -version", (error, stdout, stderr) => {
         console.log(`${stdout}`);
         console.log(`${stderr}`);
         callback(null, "OK, responsive");
