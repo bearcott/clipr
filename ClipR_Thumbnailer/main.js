@@ -4,7 +4,7 @@ var c = require("child_process");
 const exec = require("child_process").exec;
 
 exports.myHandler = function(event, context, callback) {
-  exec("ls; mv ffmpeg.tar.xz /tmp/", (error, stdout, stderr) => {
+  exec("ls", (error, stdout, stderr) => {
     console.log(`${stdout}`);
     console.log(`${stderr}`);
 
@@ -15,7 +15,7 @@ exports.myHandler = function(event, context, callback) {
     }
 
 
-    exec("cd /tmp/ tar xf ffmpeg.tar.xz; cd ffmpeg-3.4-64bit-static; ls; ./ffmpeg -version", (error, stdout, stderr) => {
+    exec("tar xf ffmpeg.tar.xz -C /tmp/; cd /tmp/; cd ffmpeg-3.4-64bit-static; ls; ./ffmpeg -version", (error, stdout, stderr) => {
         console.log(`${stdout}`);
         console.log(`${stderr}`);
         callback(null, "OK, responsive");
