@@ -14,7 +14,7 @@ exports.myHandler = function(event, context, callback) {
     s3Client: s3,
     // more options available. See API docs below.
   };
-  var client = s3.createClient(options);
+  var client = smallS3.createClient(options);
 
   exec("ls;", (error, stdout, stderr) => {
     console.log(`${stdout}`);
