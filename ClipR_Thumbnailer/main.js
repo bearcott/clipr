@@ -6,9 +6,10 @@ var zipFolder = require('zip-folder');
 var s3 = new AWS.S3();
 
 exports.myHandler = function(event, context, callback) {
+
   var contentName = event.content;
 
-  exec("ls; cp tmobile.mp4 /tmp/", (error, stdout, stderr) => {
+  exec("ls;", (error, stdout, stderr) => {
     console.log(`${stdout}`);
     console.log(`${stderr}`);
 
@@ -24,6 +25,7 @@ exports.myHandler = function(event, context, callback) {
       .createReadStream()
       .pipe(file);
 
+    
     var outputImageName = contentName + "%d.png";
 
     exec(
