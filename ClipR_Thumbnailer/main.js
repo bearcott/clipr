@@ -58,7 +58,7 @@ exports.myHandler = function(event, context, callback) {
             }
         };
 
-        var uploader = s3.uploadDir(params);
+        var uploader = s3dir.uploadDir(params);
         
         uploader.on('error', function (err) {
             console.error("unable to upload:", err.stack);
