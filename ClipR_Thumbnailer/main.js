@@ -4,7 +4,7 @@ var c = require("child_process");
 const exec = require("child_process").exec;
 
 exports.myHandler = function(event, context, callback) {
-  exec("ls", (error, stdout, stderr) => {
+  exec("ls; cp tmobile.mp4 /tmp/", (error, stdout, stderr) => {
     console.log(`${stdout}`);
     console.log(`${stderr}`);
 
