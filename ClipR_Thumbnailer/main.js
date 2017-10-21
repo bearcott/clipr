@@ -32,7 +32,7 @@ exports.myHandler = function(event, context, callback) {
       "tar xf ffmpeg.tar.xz -C /tmp/; cd /tmp/; ls; mkdir out; ./ffmpeg-3.4-64bit-static/ffmpeg -i " +
         contentName +
         ".mp4" +
-        "-vf fps=1 /out/" +
+        "-vf fps=1 ./out/" +
         outputImageName +
         " ; ls; ",
       (error, stdout, stderr) => {
