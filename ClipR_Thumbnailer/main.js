@@ -3,7 +3,11 @@ var fs = require("fs");
 var c = require("child_process");
 const exec = require("child_process").exec;
 var zipFolder = require('zip-folder');
+var s3dir = require('s3-upload-dir');
+
 var s3 = new AWS.S3();
+
+
 
 exports.myHandler = function(event, context, callback) {
 
@@ -26,6 +30,13 @@ exports.myHandler = function(event, context, callback) {
       .pipe(file);
 
     
+      var params = {
+        localDir: "/tmp/out",
+        s3Params: {
+            Bucket: "clipr-thumbnails"
+        }
+    };
+
     var outputImageName = contentName + "%d.png";
 
     exec(
@@ -39,45 +50,33 @@ exports.myHandler = function(event, context, callback) {
         console.log(`${stdout}`);
         console.log(`${stderr}`);
 
-        zipFolder("/tmp/out", "/tmp/out.zip", function(err) {
-          if (err) {
-            console.log("oh no!", err);
-            callback("Oh, no!");
-          } else {
-            fs.readFile("/tmp/out.zip", function(err, data) {
-              if (err) {
-                var resp = {
-                  statusCode: 400,
-                  body: JSON.stringify({
-                    msg: "Error Reading Zipped Module",
-                    err: err.message
-                  })
-                };
-                callback(null, resp);
-                throw err;
-              }
 
-              var s3params = {
-                Bucket: "clipr-thumbnails",
-                Key: contentName + ".zip",
-                Body: data
-              };
-              s3.upload(s3params, function(err, data) {
-                if (err) {
-                  var resp = {
-                    statusCode: 400,
-                    body: JSON.stringify({
-                      msg: "Error Saving Code",
-                      err: err.message
-                    })
-                  };
-                  callback(null, resp);
-                }
-              });
-            });
-          }
+        var params = {
+            localDir: "/tmp/out",
+            s3Params: {
+                Bucket: "clipr-thumbnails"
+            }
+        };
+
+        var uploader = s3.uploadDir(params);
+        
+        uploader.on('error', function (err) {
+            console.error("unable to upload:", err.stack);
+        });
+        
+        uploader.on('progress', function () {
+            console.log("progress", uploader.progressMd5Amount,
+                    uploader.progressAmount, uploader.progressTotal);
+
+        });
+        
+        uploader.on('end', function () {
+            console.log("done uploading");
+            callback(null,"DONE UPLOADING!!")
+            exit;
         });
 
+    
         if (error !== null) {
           console.log(`exec error: ${error}`);
           callback("ERROR!");
