@@ -2,6 +2,7 @@ var AWS = require("aws-sdk");
 var fs = require("fs");
 var c = require("child_process");
 const exec = require("child_process").exec;
+var zipFolder = require('zip-folder');
 var s3 = new AWS.S3();
 
 exports.myHandler = function(event, context, callback) {
