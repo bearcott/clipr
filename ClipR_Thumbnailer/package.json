@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bearcott/clipr#readme",
   "dependencies": {
     "ffmpeg": "~0.0.4",
-    "thumbler": "^1.1.1-1"
+    "thumbler": "^1.1.1-1",
+    "zip-folder": "^1.0.0"
   }
 }
