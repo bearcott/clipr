@@ -1,0 +1,28 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/lib/node_modules/node/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'img-ssim' ]
+2 info using npm@4.1.2
+3 info using node@v7.5.0
+4 verbose stack Error: Cannot find module 'realize-package-specifier'
+4 verbose stack     at Function.Module._resolveFilename (module.js:470:15)
+4 verbose stack     at Function.Module._load (module.js:418:25)
+4 verbose stack     at Module.require (module.js:498:17)
+4 verbose stack     at require (internal/module.js:20:19)
+4 verbose stack     at Object.<anonymous> (/usr/local/lib/node_modules/npm/lib/install/deps.js:11:31)
+4 verbose stack     at Module._compile (module.js:571:32)
+4 verbose stack     at Object.Module._extensions..js (module.js:580:10)
+4 verbose stack     at Module.load (module.js:488:32)
+4 verbose stack     at tryModuleLoad (module.js:447:12)
+4 verbose stack     at Function.Module._load (module.js:439:3)
+5 verbose cwd /Users/bear/Desktop/clipr
+6 error Darwin 16.7.0
+7 error argv "/usr/local/lib/node_modules/node/bin/node" "/usr/local/bin/npm" "install" "img-ssim"
+8 error node v7.5.0
+9 error npm  v4.1.2
+10 error code MODULE_NOT_FOUND
+11 error Cannot find module 'realize-package-specifier'
+12 error If you need help, you may report this error at:
+12 error     <https://github.com/npm/npm/issues>
+13 verbose exit [ 1, true ]
