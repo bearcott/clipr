@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
  
-image = cv2.imread('photo.png')
-template = cv2.imread('template.png')
+image = cv2.imread('tmobile.png')
+template = cv2.imread('tmobile_big.png')
  
 # resize images
 image = cv2.resize(image, (0,0), fx=0.5, fy=0.5) 
